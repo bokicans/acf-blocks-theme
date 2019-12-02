@@ -16,8 +16,8 @@ define('DIST_STYLES', DIST . 'styles/');
 define('DIST_SCRIPTS', DIST . 'scripts/');
 
 // main block & parts paths
-define('BLOCKS', 'template-parts/blocks/');
-define('PARTS', 'template-parts/parts/');
+define('BLOCKS', 'blocks/');
+define('PARTS', 'parts/');
 
 // default block category
 define('DEFAULT_BLOCK_CATEGORY_TITLE', __('ACF Blocks'));
@@ -112,7 +112,7 @@ function get_block_part($block_part_name, $data) {
 function filter_attr($data) {
 
     // $attributes must be an array
-    if ( ! isset($data['attr']) && is_array($data['attr']))
+    if ( ! isset($data['attr']) && ! is_array(@$data['attr']))
         return;
 
     $return = array();
