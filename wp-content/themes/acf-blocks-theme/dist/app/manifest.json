@@ -1,0 +1,14 @@
+{
+  "main.js": "app/main.js",
+  "runtime.js": "app/runtime.js",
+  "vendors~main.js": "app/vendors~main.js",
+  "wpackioEp": {
+    "main": {
+      "js": [
+        "app/runtime.js",
+        "app/vendors~main.js",
+        "app/main.js"
+      ]
+    }
+  }
+}
