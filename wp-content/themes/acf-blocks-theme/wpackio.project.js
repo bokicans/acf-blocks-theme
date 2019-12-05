@@ -38,13 +38,13 @@ module.exports = {
 		// },
 		// If has more length, then multi-compiler
 		{
-			name: 'scripts',
+			name: 'app',
 			entry: {
-			 		vendor: './resources/scripts/vendor.js', // Could be a string
-			 		main: ['./resources/scripts/index.js'], // Or an array of string (string[])
-			 	},
-			// 	// Extra webpack config to be passed directly
-			// 	webpackConfig: undefined,
+				// In PHP: enqueue->enqueue( 'app', 'main', [] );
+				main: ['./resources/scripts/scripts.js'],
+			},
+			// Extra webpack config to be passed directly
+			webpackConfig: undefined,
 		},
 	],
 	// Output path relative to the context directory
@@ -64,6 +64,35 @@ module.exports = {
 	externals: {
 		jquery: 'jQuery',
 	},
+	module: {
+        rules: [
+            {
+                test: require.resolve('jquery'),
+                use: [{
+                        loader: 'expose-loader',
+                        options: 'jQuery'
+                    },
+                    {
+                        loader: 'expose-loader',
+                        options: '$'
+                    }
+                ]
+            }
+		],
+		rules: [
+			{
+			  test: /\.s[ac]ss$/i,
+			  use: [
+				// Creates `style` nodes from JS strings
+				'style-loader',
+				// Translates CSS into CommonJS
+				'css-loader',
+				// Compiles Sass to CSS
+				'sass-loader',
+			  ],
+			},
+		]
+	},
 	// Webpack Aliases
 	// <https://webpack.js.org/configuration/resolve/#resolve-alias>
 	alias: undefined,
@@ -75,19 +104,19 @@ module.exports = {
 	// Won't hurt because we use PHP to automate loading
 	optimizeSplitChunks: true,
 	// Usually PHP and other files to watch and reload when changed
-	watch: './inc|includes/**/*.php',
+	watch: './(inc|theme)/**/*.php',
 	// Files that you want to copy to your ultimate theme/plugin package
 	// Supports glob matching from minimatch
 	// @link <https://github.com/isaacs/minimatch#usage>
 	packageFiles: [
 		'inc/**',
-		'vendor/**',
+		'scripts/vendor/**',
 		'dist/**',
 		'*.php',
 		'*.md',
 		'readme.txt',
 		'languages/**',
-		'layouts/**',
+		'theme/layouts/**',
 		'LICENSE',
 		'*.css',
 	],
